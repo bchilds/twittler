@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet">
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="js/jquery-dateFormat.min.js"></script>
   </head>
   <body>
       
@@ -14,6 +15,8 @@
       </div>
       <div class="right-col span-1-of-6">
           <div class="following">
+            <ul class="listOfFollowing">
+            </ul>
           </div>
           <div class="update">
               <button class="update-btn">Update</button>
@@ -38,7 +41,14 @@
           while(index >= 0){
             var tweet = streams.home[index]; //current tweet is loaded into var tweet
             var $tweet = $('<div></div>'); //each tweet is its own div
+            $tweet.data("index",index); //store the index in data attribute of each tweet
+            $tweet.addClass('tweet');
             $tweet.text('@' + tweet.user + ': ' + tweet.message);
+
+            //here I create the timestamp, give it a class, and prepend it to the text in the tweet
+            var timestamp = '<span class="timestamp">[&nbsp' + jQuery.format.date(tweet.created_at, "MM/dd/yy - hh:mm a") + '&nbsp]&nbsp&nbsp</span>';
+            $tweet.prepend(timestamp);
+
             $tweet.appendTo($body);
             index -= 1;
           }
@@ -59,9 +69,18 @@
           //schedule next tweet
           scheduleNextTweet();
         });
-          
+        
         //within the tweet generation above, we want to use the time data stored in tweet.created_at and prepend it to the tweet with its own formatting
         //give it a span with class timestamp
+        //advanced: will need to go through each tweet and update its timestamp using the jQuery prettydate
+
+        //need to display each username in top right corner
+          var $tweeters = $('.listOfFollowing');
+          for(tweeter in streams.users){
+            $tweeters.append('<li class="tweeter">@' + tweeter + '</li>')
+          }
+        //lastly, need an onClick of each username to show filtered list of only their posts (streams.users.username)
+
 
       });
         

@@ -3,6 +3,7 @@
 html, body {
     height: 100%;
     width: 100%;
+    background-color: #f2f2f2;
     font-size: 20px;
     font-family: 'Lato', 'Arial', 'san-serif';
 }
@@ -13,7 +14,7 @@ html, body {
     margin: 0px 0px 1% 8px;
     padding-top: 7px;
     border-bottom: 1px solid black;
-    background-color: beige;
+    //background-color: beige;
     overflow-y: auto;
     overflow-x: auto;
 }
@@ -30,15 +31,18 @@ html, body {
 
 .following {
     height: 80%;
-    background-color: red;
+    /*background-color: red;*/
     border-bottom: 1px solid black;
 }
 
 .update {
   height: 20%;
-  background-color: antiquewhite;
+  /*background-color: antiquewhite;*/
 }
 
+ul {
+    list-style: none;
+}
 
 /*  General functional styles   */
 
@@ -51,9 +55,19 @@ button {
     width: 70%;
     height: 40%;
     margin-left: 15%;
-    margin-top: 18%;
+    /*margin-top: 18%;*/
 }
 
 .timestamp {
+    font-size: 75%;
+    font-style: italic;
+    color: rgb(168, 168, 168);
+}
+
+.tweet {
+    
+}
+
+.tweeter {
     
 }
