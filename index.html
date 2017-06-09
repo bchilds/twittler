@@ -41,8 +41,8 @@
         var curNumTweets = 0; //stores the current number of displayed tweets for update later.
 
         function prependStoredTweets(index) {
-          while(index >= curNumTweets){
-            var tweet = streams.home[index]; //current tweet is loaded into var tweet
+          while(curNumTweets <= index){
+            var tweet = streams.home[curNumTweets]; //current tweet is loaded into var tweet
             var $tweet = $('<div></div>'); //each tweet is its own div
             $tweet.data("fullDate",tweet.created_at); //store the createdDate in data attribute of each tweet
             $tweet.data("username", tweet.user);
@@ -53,10 +53,10 @@
             var timestamp = '<span class="timestamp">[&nbsp' + jQuery.format.date($tweet.data("fullDate"), "MM/dd/yy - hh:mm:ss a") + '&nbsp]&nbsp&nbsp</span>';
             $tweet.prepend(timestamp);
 
-            $tweet.prependTo($body);
-            index -= 1;
+            $tweet.prependTo($body); //this issue starts to put oldest tweets at top for each update
+            curNumTweets += 1;
           }
-          curNumTweets = streams.home.length - 1;
+          curNumTweets = streams.home.length;
         }
 
         prependStoredTweets(index);
