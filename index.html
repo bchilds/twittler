@@ -10,7 +10,6 @@
     <script src="js/jquery-dateFormat.min.js"></script>
   </head>
   <body>
-      <div class="filler span-1-of-6"></div>
       <div class="tweets span-3-of-6">
       </div>
       <div class="right-col span-1-of-6">
@@ -23,8 +22,10 @@
               <button class="update-btn">Update</button>
           </div>
       </div>
-      <div class="filler span-1-of-6"></div>
-      <div class="post span-4-of-6">
+      <div class="post">
+          <input type="text" name="visitor" class="visitor-name" placeholder="username">
+          <input type="text" name="tweet" class="post-message" placeholder="tweet here">
+          <button class="twit-btn">Twit</button>
       </div>
       
       
@@ -46,6 +47,9 @@
             var tweet = streams.home[curNumTweets]; //current tweet is loaded into var tweet
             var $tweet = $('<div></div>'); //each tweet is its own div
             $tweet.data({"fullDate": tweet.created_at, "username": tweet.user, "message": tweet.message}); //store all tweet data in obj stored in data
+            if($tweet.data("fullDate") === undefined) { //only undefined if user-generated in this exercise
+              $tweet.data("fullDate", new Date());
+            }
             $tweet.addClass('tweet');
             $tweet.text(': ' + tweet.message);
             $tweet.prepend('@' + tweet.user);
@@ -79,7 +83,6 @@
             $(this).text(': ' + $(this).data('message'));
             $(this).prepend('@' + $(this).data('username'));
             $(this).prepend('<span class="timestamp">[&nbsp' + jQuery.format.prettyDate($(this).data("fullDate")) + '&nbsp]&nbsp&nbsp</span>');
-            console.log($(this).data('fullDate'));
           });
 
           //make sure all tweets are visible by removing filtering class from tweeters and showing all tweets
@@ -102,7 +105,7 @@
         $('.listOfFollowing li').first().css({"padding": "0 0 10px 0", "margin-top": "-10px"});
 
         //lastly, need an onClick of each username to show filtered list of only their posts (streams.users.username or each tweet div's data)
-        $('.tweeter').on('click', function(){
+        $('.listOfFollowing').on('click', 'li.tweeter', function(){
           $('.tweet').hide();
 
           //if this class does not have the class 'filtering', add it and filter
@@ -118,6 +121,25 @@
           }
           //else, if it does have the class 'filtering', remove it and show all the tweets again
         });
+
+        //write tweet
+        $('.twit-btn').on('click', function(){
+
+          visitor = $('.visitor-name').val();
+          if(!streams.users[visitor]){
+            streams.users[visitor] = [];
+            $('.listOfFollowing').append('<li class="tweeter" data-username = "'+ visitor + '">@' + visitor + '</li>');
+          }
+          writeTweet($('.post-message').val());
+
+          index = streams.home.length - 1;
+          prependStoredTweets(index);
+
+          $('.post-message').val('');
+
+
+        });
+
 
       });
         
