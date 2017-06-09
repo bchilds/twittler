@@ -29,6 +29,10 @@ html, body {
     border-left: 1px solid black;
 }
 
+.right-col h3{
+    text-align: center;
+}
+
 .following {
     height: 80%;
     /*background-color: red;*/
@@ -69,5 +73,15 @@ button {
 }
 
 .tweeter {
+    font: 175%;
+    padding: 10px 0px;
+    color: skyblue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/*  for hiding/showing of specific tweets  */
+
+.filtering {
     
 }
